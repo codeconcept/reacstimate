@@ -1,24 +1,37 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class EstimateForm extends Component {
-  state = {  }
+  state = {
+    estimateTitle: ""
+  };
+
+  handleChange = evt => {
+    const title = evt.currentTarget.value;
+    this.setState({ estimateTitle: title });
+  };
 
   handleSubmit = evt => {
     evt.preventDefault();
-    console.log('généré');
+    console.log("généré");
   };
 
-  render() { 
+  render() {
     return (
       <React.Fragment>
         <div>Nouveau devis</div>
         <form onSubmit={this.handleSubmit}>
-          <input type="text" name="estimate-title" placeholder="titre du devis" />
+          <input
+            type="text"
+            name="estimate-title"
+            value={this.estimateTitle}
+            onChange={evt => this.handleChange(evt)}
+            placeholder="titre du devis"
+          />
           <button>générer le devis</button>
         </form>
       </React.Fragment>
     );
   }
 }
- 
+
 export default EstimateForm;
