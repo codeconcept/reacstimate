@@ -23,10 +23,11 @@ class EstimateForm extends Component {
           <input
             type="text"
             name="estimate-title"
-            value={this.estimateTitle}
+            value={this.state.estimateTitle}
             onChange={evt => this.handleChange(evt)}
             placeholder="titre du devis"
           />
+          <br/>
           <button>générer le devis</button>
         </form>
       </React.Fragment>
