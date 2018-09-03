@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
+import Info from './components/info';
 import './App.css';
 
 class App extends Component {
+  state = {
+    isInCreationMode: false
+  }
+  handleNewEstimate = evt => {
+    console.log(evt);
+
+  };
+
   render() {
     return (
-      <div>
-        <h2>Bienvenue sur votre générateur de devis</h2>
-        <div>
-          Créer un devis ? C'est simple : cliquer sur <button>nouveau devis</button>
-        </div>
-      </div>
+      <Info />
     );
   }
 }
