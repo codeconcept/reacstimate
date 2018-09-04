@@ -5,21 +5,21 @@ import './App.css';
 
 class App extends Component {
   state = {
-    isInCreationMode: false
+    showForm: false
   }
 
-  handleNewEstimate = evt => {
+  handleShowEstimateForm = evt => {
     console.log(evt);    
-    this.setState({ isInCreationMode: !this.state.isInCreationMode });
+    this.setState({ showForm: !this.state.showForm });
 
   };
 
   render() {
     return (
       <div>
-        <Info />
+        <Info handleShowEstimateForm={this.handleShowEstimateForm} />
         <br/>
-        <EstimateForm />
+        {this.state.showForm && <EstimateForm />}
       </div>
     );
   }
