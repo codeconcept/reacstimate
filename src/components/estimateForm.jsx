@@ -28,7 +28,7 @@ class EstimateForm extends Component {
     console.log(this, this.state.items);
     items[id] = {
       id: id,
-      description: "description",
+      description: "",
       quantity: "1",
       taxe: 0.2,
       amount: 0
@@ -88,7 +88,7 @@ class EstimateForm extends Component {
               onItemChange={this.handleItemChange}
             />
           ))}
-          <button onClick={() => renderPDFInDOM(JSON.stringify(this.state))}>générer le devis au format PDF</button>
+          <button onClick={() => renderPDFInDOM(this.state)}>générer le devis au format PDF</button>
         </form>
       </React.Fragment>
     );

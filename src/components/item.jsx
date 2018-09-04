@@ -4,7 +4,7 @@ const Item = ({ item, onItemChange }) => {
   return (
     <React.Fragment>
       <div className="container">
-        <div className="row">
+        <div className="row mb-2">
           <div className="col">
             <input
               type="text"
