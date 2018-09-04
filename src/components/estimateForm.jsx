@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import InputText from "./inputText";
 import Item from "./item";
+import {renderPDFInDOM} from './pdfMaker';
 
 class EstimateForm extends Component {
   state = {
@@ -87,7 +88,7 @@ class EstimateForm extends Component {
               onItemChange={this.handleItemChange}
             />
           ))}
-          <button>générer le devis</button>
+          <button onClick={() => renderPDFInDOM(JSON.stringify(this.state))}>générer le devis au format PDF</button>
         </form>
       </React.Fragment>
     );
