@@ -5,7 +5,7 @@ import './App.css';
 
 class App extends Component {
   state = {
-    showForm: false
+    showForm: true
   }
 
   handleShowEstimateForm = evt => {
