@@ -1,45 +1,160 @@
 import React from "react";
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  Font
+} from "@react-pdf/renderer";
 import ReactDOM from "react-dom";
 
 // Create styles
 const styles = StyleSheet.create({
   page: {
-    flexDirection: "row",
+    flexDirection: "column",
     backgroundColor: "#E4E4E4"
   },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    flexWrap: "wrap"
+  },
   section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-    fontSize: 30
+    margin: 5,
+    padding: 5,
+    fontSize: 12,
+    flexDirection: 'row',
+    // border: '3px solid pink',
+  },
+  title: {
+    margin: 5,
+    fontSize: 15,
+    textAlign: "center",
+    backgroundColor: "#e4e4e4",
+    textTransform: "uppercase"
+  },
+  body: {
+    flexGrow: 1
+  },
+  row: {
+    flexDirection: "row",
+    width: "100%",
+    height: 130,
+    // border: "3px solid yellow"
+  },
+  block: {
+    flexGrow: 1
+  },
+  text: {
+    width: "33.330%",
+    margin: 5,
+    fontFamily: "Oswald",
+    textAlign: "justify"
+  },
+  leftColumn: {
+    flexDirection: "column",
+    marginLeft: 30,
+    marginRight: 15,
+    marginTop: 5,
+    flexBasis: 220,
+    height: 90,
+    // border: "3px solid red",
+  },
+  rightColumn: {
+    flexDirection: "column",
+    flexGrow: 10,
+    marginLeft: 15,
+    marginRight: 30,
+    marginTop: 5,
+    flexBasis: 20,
+    height: 90,
+    // border: "3px solid blue",
+  },
+  line: {
+    fontFamily: "Oswald",
+    textAlign: "justify",
+    fontSize: 12,
+    margin: 5,
+    padding: 5,
+    width: 90,
+    flexDirection: "row",
+    // border: '3px solid orange'
   }
 });
 
 const decimalToPercent = decimal => {
-  return (decimal * 100);
-}
+  return decimal * 100;
+};
+
+Font.register(`../fonts/Roboto-Regular.ttf`, { family: "Roboto" });
+Font.register(
+  "https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf",
+  { family: "Oswald" }
+);
+
+const Title = ({ children }) => <Text style={styles.title}>{children}</Text>;
 
 // Create Document Component
 const MyDocument = ({ text }) => (
   <Document>
     <Page size="A4" style={styles.page}>
-      <View style={styles.section}>
-        <Text>Devis : {text.title} </Text>
-        <Text>n°: {text.id} </Text>
-        <Text>
-          Client : {text.customerFirstName} {text.customerLastName}
-        </Text>
-        <Text>Articles : </Text>
-        {Object.keys(text.items).map((key, index) => (
-          <Text key={key}>
-            {text.items[key].quantity} &nbsp;
-            {text.items[key].description} &nbsp;
-            {parseFloat(text.items[key].taxe)* 100}% &nbsp;
-            {text.items[key].amount} €
-          </Text>
-        ))}
+      <View style={styles.row}>
+        <View style={styles.leftColumn}>
+          <Text>Code Concept</Text>
+          <Text>Cs 30 817</Text>
+          <Text>11 rue du clos courtel</Text>
+          <Text>35700 rennes</Text>
+        </View>
+        <View style={styles.rightColumn}>
+          <Text>FACTURE</Text>
+        </View>
       </View>
+
+      <View style={styles.row}>
+        <View style={styles.leftColumn} />
+        <View style={styles.rightColumn}>
+          <Text>Société et/ou nom du client</Text>
+          <Text>
+            Client : {text.customerFirstName} {text.customerLastName}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.row}>
+        <View style={styles.leftColumn}>
+          <Text>Devis : {text.title} </Text>
+          <Text>devis n°: {text.id} </Text>
+        </View>
+        <View style={styles.rightColumn} />
+      </View>
+
+      <View style={styles.row}>
+        <View style={styles.leftColumn}>
+          <Text>Intitulé : {text.title} </Text>
+        </View>
+        <View style={styles.rightColumn} />
+      </View>
+
+      <View style={styles.container}>
+        <View style={styles.section}>
+          <Text style={styles.line}>Quantité</Text>
+          <Text style={styles.line}>Désignation</Text>
+          <Text style={styles.line}>Prix unitaire</Text>
+          <Text style={styles.line}>Prix total HT</Text>
+        </View>
+      </View>    
+      <View style={styles.container}>
+          {Object.keys(text.items).map((key, index) => (
+            <View style={styles.section}>
+              <Text style={styles.line}>{text.items[key].quantity}</Text>
+              <Text style={styles.line}>{text.items[key].description}</Text>
+              <Text style={styles.line}>{text.items[key].amount} €</Text>
+              <Text style={styles.line}>{parseInt(text.items[key].quantity) *  text.items[key].amount} €</Text>
+              {/* <Text style={styles.line}>{parseFloat(text.items[key].taxe) * 100}%</Text> */}
+            </View>
+          ))}
+      </View>   
     </Page>
   </Document>
 );
