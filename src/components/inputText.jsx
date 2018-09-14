@@ -3,7 +3,7 @@ import React from 'react';
 const InputText = (props) => {
   return (
     <React.Fragment>
-      <div className="container">
+      <div className="container estimateitem" style={{marginLeft: 0}}>
         <div className="row">
           <div className="col">
             <label htmlFor={props.name}>{props.label}</label>

@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "column",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    marginLeft: "30"
   },
   section: {
     margin: 5,
@@ -43,6 +44,12 @@ const styles = StyleSheet.create({
     height: 130,
     // border: "3px solid yellow"
   },
+  rowSmallHeight: {
+    flexDirection: "row",
+    width: "100%",
+    height: 85,
+    // border: "3px solid yellow"
+  },
   block: {
     flexGrow: 1
   },
@@ -54,20 +61,20 @@ const styles = StyleSheet.create({
   },
   leftColumn: {
     flexDirection: "column",
+    fontSize: 12,
     marginLeft: 30,
     marginRight: 15,
     marginTop: 5,
-    flexBasis: 220,
     height: 90,
     // border: "3px solid red",
   },
   rightColumn: {
     flexDirection: "column",
     flexGrow: 10,
+    fontSize: 12,
     marginLeft: 15,
     marginRight: 30,
     marginTop: 5,
-    flexBasis: 20,
     height: 90,
     // border: "3px solid blue",
   },
@@ -77,15 +84,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     margin: 5,
     padding: 5,
-    width: 90,
+    width: 80,
     flexDirection: "row",
     // border: '3px solid orange'
   }
 });
-
-const decimalToPercent = decimal => {
-  return decimal * 100;
-};
 
 Font.register(`../fonts/Roboto-Regular.ttf`, { family: "Roboto" });
 Font.register(
@@ -93,7 +96,47 @@ Font.register(
   { family: "Oswald" }
 );
 
-const Title = ({ children }) => <Text style={styles.title}>{children}</Text>;
+// const Title = ({ children }) => <Text style={styles.title}>{children}</Text>;
+
+const generateCorrespondingSpace = sentence => ' '.repeat(sentence.length);
+
+
+const totals = {
+  totalWithoutTaxes: 0,
+  taxes: 0,
+  totalTaxeIncluded: 0
+}
+
+const totalWithoutTaxes = (items) => {
+  const resultWithoutTaxes = Object.keys(items)
+    .map(key => {
+      const amount = parseFloat(items[key].amount, 10);
+      const quantity = parseInt(items[key].quantity, 10);
+      return (amount * quantity);
+    })
+    .reduce((acc, curr) => {
+      return acc += curr;
+  }, 0);
+  totals.totalWithoutTaxes = resultWithoutTaxes;
+  return resultWithoutTaxes;
+  
+};
+
+const totalTaxeIncluded = (items) => {
+  const resulTaxeIncluded = Object.keys(items)
+  .map(key => {
+    const amount = parseFloat(items[key].amount, 10);
+    const quantity = parseInt(items[key].quantity, 10);
+    const taxe = parseFloat(items[key].taxe, 10); 
+    totals.taxes += (amount * quantity * taxe);
+    return ((amount * quantity) + (amount * quantity * taxe));
+  })
+  .reduce((acc, curr) => {
+    return acc += curr;
+  }, 0);
+  totals.totalTaxeIncluded = resulTaxeIncluded;
+  return resulTaxeIncluded;
+};
 
 // Create Document Component
 const MyDocument = ({ text }) => (
@@ -107,7 +150,7 @@ const MyDocument = ({ text }) => (
           <Text>35700 rennes</Text>
         </View>
         <View style={styles.rightColumn}>
-          <Text>FACTURE</Text>
+          <Text style={styles.title}>FACTURE</Text>
         </View>
       </View>
 
@@ -121,7 +164,7 @@ const MyDocument = ({ text }) => (
         </View>
       </View>
 
-      <View style={styles.row}>
+      <View style={styles.rowSmallHeight}>
         <View style={styles.leftColumn}>
           <Text>Devis : {text.title} </Text>
           <Text>devis n°: {text.id} </Text>
@@ -129,7 +172,7 @@ const MyDocument = ({ text }) => (
         <View style={styles.rightColumn} />
       </View>
 
-      <View style={styles.row}>
+      <View style={styles.rowSmallHeight}>
         <View style={styles.leftColumn}>
           <Text>Intitulé : {text.title} </Text>
         </View>
@@ -146,15 +189,39 @@ const MyDocument = ({ text }) => (
       </View>    
       <View style={styles.container}>
           {Object.keys(text.items).map((key, index) => (
-            <View style={styles.section}>
+            <View style={styles.section} key={key}>
               <Text style={styles.line}>{text.items[key].quantity}</Text>
               <Text style={styles.line}>{text.items[key].description}</Text>
               <Text style={styles.line}>{text.items[key].amount} €</Text>
-              <Text style={styles.line}>{parseInt(text.items[key].quantity) *  text.items[key].amount} €</Text>
+              <Text style={styles.line}>{parseInt(text.items[key].quantity, 10) *  text.items[key].amount} €</Text>
               {/* <Text style={styles.line}>{parseFloat(text.items[key].taxe) * 100}%</Text> */}
             </View>
           ))}
-      </View>   
+      </View>  
+      <View style={styles.container}>
+        <View style={styles.section}>
+          <Text style={styles.line}>{generateCorrespondingSpace('Quantité')}</Text>
+          <Text style={styles.line}>{generateCorrespondingSpace('Désignation')}</Text>
+          <Text style={styles.line}>Total HT</Text>
+          <Text style={styles.line}>{totalWithoutTaxes(text.items)} €</Text>
+        </View>
+      </View>  
+      <View style={styles.container}>
+        <View style={styles.section}>
+          <Text style={styles.line}>{generateCorrespondingSpace('Quantité')}</Text>
+          <Text style={styles.line}>{generateCorrespondingSpace('Désignation')}</Text>
+          <Text style={styles.line}>Total TTC</Text>
+          <Text style={styles.line}>{totalTaxeIncluded(text.items)} €</Text>
+        </View>
+      </View>  
+      <View style={styles.container}>
+        <View style={styles.section}>
+          <Text style={styles.line}>{generateCorrespondingSpace('Quantité')}</Text>
+          <Text style={styles.line}>{generateCorrespondingSpace('Désignation')}</Text>
+          <Text style={styles.line}>dont TVA</Text>
+          <Text style={styles.line}>{totals.taxes} €</Text>
+        </View>
+      </View>  
     </Page>
   </Document>
 );
