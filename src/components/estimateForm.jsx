@@ -29,7 +29,7 @@ class EstimateForm extends Component {
     items[id] = {
       id: id,
       description: "",
-      quantity: "1",
+      quantity: "",
       taxe: 0.2,
       amount: 0
     };
@@ -38,7 +38,7 @@ class EstimateForm extends Component {
   };
 
   handleItemChange = (evt, item, field) => {
-    console.log(evt.currentTarget.value, item, field);
+    // console.log(evt.currentTarget.value, item, field);
     const value = evt.currentTarget.value;
     const clonedItem = {...item};
     clonedItem[field] = value;

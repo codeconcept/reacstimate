@@ -117,25 +117,27 @@ const totalWithoutTaxes = (items) => {
     .reduce((acc, curr) => {
       return acc += curr;
   }, 0);
-  totals.totalWithoutTaxes = resultWithoutTaxes;
-  return resultWithoutTaxes;
+  totals.totalWithoutTaxes = parseFloat(resultWithoutTaxes.toFixed(2));
+  return totals.totalWithoutTaxes
   
 };
 
 const totalTaxeIncluded = (items) => {
   const resulTaxeIncluded = Object.keys(items)
   .map(key => {
-    const amount = parseFloat(items[key].amount, 10);
+    const amount = parseFloat(items[key].amount, 10)
     const quantity = parseInt(items[key].quantity, 10);
     const taxe = parseFloat(items[key].taxe, 10); 
     totals.taxes += (amount * quantity * taxe);
-    return ((amount * quantity) + (amount * quantity * taxe));
+    const result = ((amount * quantity) + (amount * quantity * taxe));
+    console.log('result', result);
+    return result;
   })
   .reduce((acc, curr) => {
     return acc += curr;
   }, 0);
-  totals.totalTaxeIncluded = resulTaxeIncluded;
-  return resulTaxeIncluded;
+  totals.totalTaxeIncluded = parseFloat(resulTaxeIncluded.toFixed(2));
+  return totals.totalTaxeIncluded;
 };
 
 // Create Document Component
@@ -150,7 +152,7 @@ const MyDocument = ({ text }) => (
           <Text>35700 rennes</Text>
         </View>
         <View style={styles.rightColumn}>
-          <Text style={styles.title}>FACTURE</Text>
+          <Text style={styles.title}>DEVIS</Text>
         </View>
       </View>
 
@@ -219,7 +221,7 @@ const MyDocument = ({ text }) => (
           <Text style={styles.line}>{generateCorrespondingSpace('Quantité')}</Text>
           <Text style={styles.line}>{generateCorrespondingSpace('Désignation')}</Text>
           <Text style={styles.line}>dont TVA</Text>
-          <Text style={styles.line}>{totals.taxes} €</Text>
+          <Text style={styles.line}>{totals.taxes.toFixed(2)} €</Text>
         </View>
       </View>  
     </Page>
