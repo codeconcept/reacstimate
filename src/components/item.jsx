@@ -10,9 +10,9 @@ const Item = ({ item, onItemChange }) => {
   return (
     <React.Fragment>
       <div className="container" style={{marginLeft: 0}}>
-        <div className="row mb-2">
+        <div className="row m-2">
           <div className="col">
-            <label htmlFor={labels.one.text}>{labels.one.text}</label>
+            <label className="m-2" htmlFor={labels.one.text}>{labels.one.text}</label>
             <input
               type="text"
               id={labels.one.text}
@@ -23,7 +23,7 @@ const Item = ({ item, onItemChange }) => {
             />
           </div>
           <div className="col">
-            <label htmlFor={labels.two.text}>{labels.two.text}</label>
+            <label className="m-2" htmlFor={labels.two.text}>{labels.two.text}</label>
             <input
               type="number"
               id={labels.two.text}
@@ -34,7 +34,7 @@ const Item = ({ item, onItemChange }) => {
             />
           </div>
           <div className="col">
-            <label htmlFor={labels.three.text}>{labels.three.text}</label>
+            <label className="m-2" htmlFor={labels.three.text}>{labels.three.text}</label>
             <input
               type="text"
               id={labels.three.text}
@@ -45,7 +45,7 @@ const Item = ({ item, onItemChange }) => {
             />
           </div>
           <div className="col">
-            <label htmlFor={labels.four.text}>{labels.four.text}</label>
+            <label className="m-2" htmlFor={labels.four.text}>{labels.four.text}</label>
             <input
               type="text"
               id={labels.four.text}

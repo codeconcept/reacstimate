@@ -80,7 +80,7 @@ class EstimateForm extends Component {
             onChange={this.handleChange}
           />
           <br />
-          <button onClick={this.addItem}>ajouter une ligne</button>
+          <button className="btn btn-success m-2" onClick={this.addItem}>ajouter une ligne</button>
           {Object.keys(this.state.items).map((item, index) => (
             <Item
               key={index}
@@ -88,7 +88,7 @@ class EstimateForm extends Component {
               onItemChange={this.handleItemChange}
             />
           ))}
-          <button onClick={() => renderPDFInDOM(this.state)}>générer le devis au format PDF</button>
+          <button className="btn btn-danger" onClick={() => renderPDFInDOM(this.state)}>générer le devis au format PDF</button>
         </form>
       </React.Fragment>
     );

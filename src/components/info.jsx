@@ -6,7 +6,7 @@ const Info = (props) => {
       <h2>Bienvenue sur votre générateur de devis</h2>
       <div>
         Créer un devis ? C'est simple : cliquer sur{" "}
-        <button onClick={props.handleShowEstimateForm}>nouveau devis</button>
+        <button className="btn btn-warning ml-2" onClick={props.handleShowEstimateForm}>nouveau devis</button>
       </div>
     </div>
   );
